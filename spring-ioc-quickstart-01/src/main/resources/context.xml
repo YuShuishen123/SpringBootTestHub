@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 依赖注入 -->
+    <!-- <bean id="studentService" class="com.gzu.service.impl.StudentServiceImpl"> -->
+    <!--        <property name="studentDao" ref="studentDao3" /> -->
+    <!-- </bean> -->
+
+    <!-- 使用setter方法注入 -->
+    <!-- <bean id="studentServiceLifeCycle" class="com.gzu.service.impl.StudentServiceImpl"> -->
+    <!--        <property name="studentDao1" ref="studentDaolife" /> -->
+    <!--        <property name="testA" value="128" /> -->
+    <!--        <property name="testNumbers" value="1,2,3,4,5" /> -->
+    <!-- </bean> -->
+
+    <!-- 通过构造方法 -->
+    <!-- <bean id="studentDao3" name="studentDaoImpl2" class="com.gzu.dao.impl.StudentDaoImpl2" /> -->
+
+    <!-- 静态工厂方法 -->
+    <!-- <bean id="teacherDao" name="teacherDaoName" class="com.gzu.Factory.TeacherFactory" -->
+    <!--        factory-method="getTeacherDao"/> -->
+
+    <!-- 实例工厂方法 -->
+    <!-- <bean id="lessonFactory" name="LessonFactoryName" class="com.gzu.Factory.LessonFactory" /> -->
+    <!-- <bean id="lessonDao" factory-method="getLessonDao" factory-bean="lessonFactory" /> -->
+
+    <!-- 实例工厂方法2，采用factoryBean -->
+    <!-- <bean id="scoreDao" name="scoreDaoBeanName" class="com.gzu.Factory.ScoreDaoFactoryBean" /> -->
+
+    <!-- 使用带参构造方法构造 -->
+    <!--<bean id="studentServiceLifeCycle" class="com.gzu.service.impl.StudentServiceImpl">-->
+    <!-- 通过type指定参数类型来注入构造函数参数 -->
+    <!-- 如果是自定义的类型，如类或者DAO模型。需要加上包目录 -->
+    <!--<constructor-arg type="com.gzu.dao.StudentDao" ref="studentDaoLife"/>-->
+    <!--此处的type变量的包路径只需要写到业务接口层service，不能写到实现层-->
+    <!--<constructor-arg type="int" value="666"/>-->
+
+    <!-- 通过index（参数下标）来进行注入 -->
+    <!-- <constructor-arg index="0" ref="studentDaoLife"/> -->
+    <!-- <constructor-arg index="0" value="999"/> -->
+    <!--</bean>-->
+
+    <!--    通过studentDaoLife来演示通过属性名称进行注入-->
+    <!--<bean id="studentDaoLife" class="com.gzu.dao.impl.StudentDaoImpl3">-->
+    <!--    <property name="testA" value="123"/>-->
+    <!--    <property name="testNumbers" value="1,2,3,4,5"/>-->
+    <!--</bean>-->
+
+
+    <!--测试autowire="byType"自动装配功能，此时StudentServiceImpl需要有无参构造方法，
+    并且满足属性类型要求的bean只能有一个-->
+    <!--依赖实例-->
+    <bean id="studentServiceForAutoWideTest" class="com.gzu.service.impl.StudentServiceImpl" autowire="byType">
+    </bean>
+    <!--被依赖实例-->
+    <!--<bean id="studentDaoForAutoWideTest" class="com.gzu.dao.impl.StudentDaoImpl3" destroy-method="customDestroy">-->
+    <!--    <property name="testA" value="223"/>-->
+    <!--    <property name="testNumbers" value="1,2,3,4,5"/>-->
+    <!--</bean>-->
+
+    <!--测试通过属性名称自动注入，此时和属性同一名称的实例只能有一个-->
+    <!--<bean id="studentServiceForAutoWideTestForByName" class = "com.gzu.service.impl.StudentServiceImpl" autowire="byName">-->
+    <!--</bean>-->
+    <!--<bean id="studentDao" class="com.gzu.dao.impl.StudentDaoImpl3">-->
+    <!--    <property name="testA" value="223"/>-->
+    <!--    <property name="testNumbers" value="1,2,3,4,5"/>-->
+    <!--</bean>-->
+
+    <!--测试从配置文件引入属性值-->
+    <!--引入配置文件-->
+    <context:property-placeholder location="studentDao3Value.properties"/>
+
+    <bean id="studentDaoFromProperties" class="com.gzu.dao.impl.StudentDaoImpl3" destroy-method="customDestroy">
+        <property name="testA" value="${testA}"/>
+        <property name="testNumbers" value="${testNumbers}"/>
+    </bean>
+</beans>
