@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SpringBoot.Spring_Mybatis_Test.Mapper.EmployeeMapper">
+
+    <!-- 定义 Employee 的结果映射 -->
+    <resultMap id="EmployeeResultMap" type="SpringBoot.Spring_Mybatis_Test.DO.Employee">
+        <id property="empId" column="emp_id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="hireDate" column="hire_date"/>
+        <result property="jobTitle" column="job_title"/>
+        <result property="salary" column="salary"/>
+        <result property="deptId" column="dept_id"/>
+
+        <!-- 关联部门信息 -->
+        <!--此处为一对一,使用association标签,javaType指定类型-->
+        <association property="department" javaType="SpringBoot.Spring_Mybatis_Test.DO.Department">
+            <id property="deptId" column="dept_id"/>
+            <result property="deptName" column="dept_name"/>
+            <result property="location" column="location"/>
+        </association>
+
+        <!-- 关联项目列表 -->
+        <!--此处为一对多,采用collection,表示映射对象为一个集合,使用oftype来进行修饰-->
+        <collection property="projects" ofType="SpringBoot.Spring_Mybatis_Test.DO.Project">
+            <id property="projectId" column="project_id"/>
+            <result property="projectName" column="project_name"/>
+        </collection>
+    </resultMap>
+
+    <!-- 查询员工及其参与的项目 -->
+    <select id="selectEmployeeWithDetails" resultMap="EmployeeResultMap">
+        SELECT e.*, d.dept_name, d.location, p.project_id, p.project_name
+        FROM employees e
+                 LEFT JOIN departments d ON e.dept_id = d.dept_id
+                 LEFT JOIN employee_projects ep ON e.emp_id = ep.emp_id
+                 LEFT JOIN projects p ON ep.project_id = p.project_id
+        WHERE e.emp_id = #{empId}
+    </select>
+
+</mapper>

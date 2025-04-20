@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SpringBoot.Spring_Mybatis_Homework.mapper.StudentCourseMapper">
+    <resultMap id="StudentCourseResultMap" type="SpringBoot.Spring_Mybatis_Homework.DO.StudentCourse">
+        <id property="studentId" column="student_id"/>
+        <id property="courseId" column="course_id"/>
+        <result property="enrollmentDate" column="enrollment_date"/>
+
+    <!-- 一对多关联Student信息   -->
+    <collection property="students" ofType="SpringBoot.Spring_Mybatis_Homework.DO.Student">
+        <id property="studentId" column="student_id"/>
+        <result property="studentName" column="student_name"/>
+        <result property="enrollmentYear" column="enrollment_year"/>
+    </collection>
+
+    <!-- 一对多关联Course信息   -->
+    <collection property="courses" ofType="SpringBoot.Spring_Mybatis_Homework.DO.Course">
+        <id property="courseId" column="course_id"/>
+        <result property="courseName" column="course_name"/>
+        <result property="credit" column="credit"/>
+    </collection>
+    </resultMap>
+
+    <select id="selectStudentCourseByStudentIdAndCourseId" resultMap="StudentCourseResultMap">
+        SELECT
+            sc.student_id,
+            sc.course_id,
+            sc.enrollment_date,
+            s.student_name,
+            s.enrollment_year,
+            c.course_name,
+            c.credit
+        FROM student_courses sc
+        JOIN students s ON sc.student_id = s.student_id
+        JOIN courses c ON sc.course_id = c.course_id
+        WHERE sc.student_id = #{studentId} AND sc.course_id = #{courseId}
+    </select>
+
+
+
+    <insert id="insertStudentCourseByStudentIdAndCourseId">
+        INSERT INTO student_courses (student_id, course_id, enrollment_date)
+        VALUES (#{studentId}, #{courseId}, #{enrollmentDate})
+    </insert>
+
+    <update id="updateStudentCourseByStudentIdAndCourseId">
+        UPDATE student_courses
+        SET enrollment_date = #{enrollmentDate}, course_id = #{newCourseId}
+        WHERE student_id = #{studentId} AND course_id = #{courseId}
+    </update>
+
+    <delete id="deleteStudentCourseByStudentIdAndCourseId">
+        DELETE FROM student_courses
+        WHERE student_id = #{studentId} AND course_id = #{courseId}
+    </delete>
+
+
+</mapper>
