@@ -16,6 +16,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mapper/StudentMapper.xml"/>
+        <mapper resource="SpringBoot/Spring_Mybatis_Test/Mapper/StudentMapper.xml"/>
+        <mapper resource="SpringBoot/Spring_Mybatis_Test/Mapper/UserMapper.xml"/>
     </mappers>
 </configuration>

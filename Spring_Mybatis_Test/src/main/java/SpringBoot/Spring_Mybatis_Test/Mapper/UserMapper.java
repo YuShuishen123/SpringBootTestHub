@@ -12,7 +12,7 @@ public interface UserMapper {
     //    @Select("SELECT * FROM user WHERE id = #{id}")
     User selectById(int id);
 
-    //    @Insert("INSERT INTO user(name, email) VALUES(#{name}, #{email})")
-    //    @Options(useGeneratedKeys = true, keyProperty = "id")
+//    @Insert("INSERT INTO user (name, age, email) VALUES (#{name}, #{age}, #{email})")
+//    @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(User user);
 }
