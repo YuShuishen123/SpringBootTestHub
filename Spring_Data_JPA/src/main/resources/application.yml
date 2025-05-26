@@ -1,0 +1,33 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /jpa
+spring:
+  application:
+    name: Spring_Data_JPA_Demo
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_data_demo
+    username: root
+    password: mzyudada
+    type: com.alibaba.druid.pool.DruidDataSource
+    # druid数据源配置
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      filters: stat,wall # 启用监控统计
+  jpa:
+    hibernate:
+      ddl-auto: validate  # 自动创建表结构
+    show-sql: true     # 显示 SQL 语句
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+
+
+
