@@ -1,0 +1,44 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /redis
+spring:
+  application:
+    name: Spring_Redis
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_data_demo
+    username: root
+    password: mzyudada
+    type: com.alibaba.druid.pool.DruidDataSource
+    # druid数据源配置
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      filters: stat,wall # 启用监控统计
+  # redis配置
+  data:
+    redis:
+      database: 0
+      host: 124.222.132.163
+      port: 6379
+      password: mzyudada
+      timeout: 5000
+
+mybatis-plus:
+  configuration:
+    # 数据库下划线转换为驼峰
+    map-underscore-to-camel-case: true
+    #     仅在开发环境下打印日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+
