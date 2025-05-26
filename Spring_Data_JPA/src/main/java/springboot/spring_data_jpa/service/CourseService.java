@@ -1,6 +1,5 @@
 package springboot.spring_data_jpa.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springboot.spring_data_jpa.model.entity.Course;
 import springboot.spring_data_jpa.model.entity.Student;
@@ -8,8 +7,11 @@ import springboot.spring_data_jpa.repository.CourseRepository;
 
 @Service
 public class CourseService {
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
+
+    public CourseService(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
 
     // 获取所有课程
     public Iterable<Course> getAllCourses() {

@@ -1,6 +1,5 @@
 package springboot.spring_data_jpa.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springboot.spring_data_jpa.model.entity.Department;
 import springboot.spring_data_jpa.repository.DepartmentRepository;
@@ -10,8 +9,11 @@ import java.util.Optional;
 
 @Service
 public class DepartmentService {
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
+
+    public DepartmentService(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
+    }
 
     // 获取所有部门
     public List<Department> getAllDepartments() {

@@ -37,3 +37,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+Spring_Data_JPA/src/main/resources/application-local.yml
